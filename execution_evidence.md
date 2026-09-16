@@ -34,3 +34,5 @@ docker build -t zepto-support-assistant support_assistant
 docker run --rm -p 7860:7860 zepto-support-assistant
 pytest -q
 ```
+
+The validation suite was rerun after the final rubric-audit changes.
