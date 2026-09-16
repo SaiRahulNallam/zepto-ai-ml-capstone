@@ -1,6 +1,6 @@
 # Zepto Data & AI Platform
 
-A single capstone repository containing three linked engineering capabilities: a scraping-to-SQL data pipeline, a Titanic analytics/modeling pipeline, and an offline-first RAG support assistant. The capstone requires exactly one repository containing `data_pipeline`, `analytics`, and `support_assistant`, with setup/run guidance and design decisions documented here. fileciteturn1file0L24-L37
+A single capstone repository containing three linked engineering capabilities: a scraping-to-SQL data pipeline, a Titanic analytics/modeling pipeline, and an offline-first RAG support assistant. The capstone requires exactly one repository containing `data_pipeline`, `analytics`, and `support_assistant`, with setup/run guidance and design decisions documented here.
 
 ## Repository Structure
 
@@ -31,7 +31,7 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-The support assistant defaults to `MOCK_LLM=1`, requiring no LLM API key. The project specification describes this offline mock path as the graded baseline; the real-LLM path is optional. fileciteturn1file0L24-L47
+The support assistant defaults to `MOCK_LLM=1`, requiring no LLM API key. The project specification describes this offline mock path as the graded baseline; the real-LLM path is optional.
 
 ## Module 1 — Data Pipeline
 
@@ -44,11 +44,11 @@ python -m data_pipeline.src.pipeline
 pytest -q data_pipeline/tests
 ```
 
-The scraper uses three categories, requires at least 60 books, and captures title, price, star rating, availability, and category. The project-defined rate is exactly `1 GBP = 105.50 INR`; it is not a live exchange rate. fileciteturn0file1L70-L100
+The scraper uses three categories, requires at least 60 books, and captures title, price, star rating, availability, and category. The project-defined rate is exactly `1 GBP = 105.50 INR`; it is not a live exchange rate.
 
 ## Module 2 — Analytics
 
-The loader calls `sns.load_dataset('titanic')` once, immediately writes `analytics/titanic.csv`, and subsequent modeling reads the committed CSV. This matches the requirement that the raw dataset is loaded once and then reused. fileciteturn1file0L145-L164
+The loader calls `sns.load_dataset('titanic')` once, immediately writes `analytics/titanic.csv`, and subsequent modeling reads the committed CSV. This matches the requirement that the raw dataset is loaded once and then reused.
 
 Run:
 
@@ -57,7 +57,7 @@ python -m analytics.src.pipeline
 pytest -q analytics/tests
 ```
 
-Artifacts are written to `analytics/outputs/` and the complete fitted preprocessing + estimator is saved as `analytics/models/best_pipeline.joblib`. The model pipeline is raw-input compatible after reload. fileciteturn1file0L250-L264
+Artifacts are written to `analytics/outputs/` and the complete fitted preprocessing + estimator is saved as `analytics/models/best_pipeline.joblib`. The model pipeline is raw-input compatible after reload.
 
 ## Module 3 — Support Assistant
 
@@ -82,7 +82,7 @@ curl -X POST http://localhost:7860/ask -H "Content-Type: application/json" -d '{
 curl -X POST http://localhost:7860/ask -H "Content-Type: application/json" -d '{"query":"What is the capital of France?"}'
 ```
 
-The eight supplied policy documents are stored verbatim in `support_assistant/docs/`. The mock classifier uses the required keyword heuristic; policy queries retrieve top-3 cosine-similarity chunks, while general questions return the fixed policy-focused mock response. fileciteturn1file0L49-L67 fileciteturn1file0L117-L154
+The eight supplied policy documents are stored verbatim in `support_assistant/docs/`. The mock classifier uses the required keyword heuristic; policy queries retrieve top-3 cosine-similarity chunks, while general questions return the fixed policy-focused mock response.
 
 ### Docker
 
@@ -92,7 +92,7 @@ docker build -t zepto-support-assistant .
 docker run --rm -p 7860:7860 zepto-support-assistant
 ```
 
-The Dockerfile is the required local container baseline; cloud deployment is optional. fileciteturn1file0L155-L171
+The Dockerfile is the required local container baseline; cloud deployment is optional.
 
 ## Validation / Acceptance Coverage
 
@@ -119,7 +119,7 @@ The Dockerfile is the required local container baseline; cloud deployment is opt
 
 ## Git workflow
 
-The capstone requires a feature branch created from `main`, at least two commits on that branch, and a merge back into `main`. fileciteturn0file1L50-L58
+The capstone requires a feature branch created from `main`, at least two commits on that branch, and a merge back into `main`.
 
 Example workflow for your own Git host:
 
@@ -133,7 +133,7 @@ git merge --no-ff feature/capstone-implementation -m "merge: capstone implementa
 git log --graph --oneline --all
 ```
 
-Do not manufacture timestamps or deceptive history; the final history should show genuine branch/commit/merge activity. fileciteturn0file0L911-L932
+Do not manufacture timestamps or deceptive history; the final history should show genuine branch/commit/merge activity.
 
 ## Important execution note for this build environment
 
