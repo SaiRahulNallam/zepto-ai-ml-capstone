@@ -1,0 +1,2 @@
+model__max_depth,model__max_features,model__n_estimators,oob_score
+5,sqrt,100,0.8073136427566807

@@ -1,0 +1,1 @@
+The residual-vs-predicted correlation with absolute residual magnitude is 0.3368. On this simple diagnostic, the residual plot suggests heteroscedasticity. This is a visual/diagnostic interpretation, not a formal heteroscedasticity test.

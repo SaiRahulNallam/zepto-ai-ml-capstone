@@ -1,0 +1,12 @@
+{
+  "selected_model": "Decision Tree",
+  "raw_input_columns": [
+    "age",
+    "sibsp",
+    "parch",
+    "fare",
+    "sex",
+    "embarked"
+  ],
+  "prediction": 0
+}
