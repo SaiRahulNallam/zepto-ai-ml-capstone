@@ -1,4 +1,5 @@
 column,missing_count,missing_percentage,chosen_strategy,reason
 age,177,19.8653,impute,Threshold rule from capstone specification.
-cabin,687,77.1044,drop column or encode missing; chosen: impute only if defensible; this dataset uses explicit drop of unreliable high-missing fields,Threshold rule from capstone specification.
 embarked,2,0.2245,drop rows,Threshold rule from capstone specification.
+deck,688,77.2166,drop column or encode missing; chosen: impute only if defensible; this dataset uses explicit drop of unreliable high-missing fields,Threshold rule from capstone specification.
+embark_town,2,0.2245,drop rows,Threshold rule from capstone specification.
