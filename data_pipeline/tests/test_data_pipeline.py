@@ -34,3 +34,28 @@ def test_database_and_equivalence(tmp_path):
     sql_df, pd_df, ok=pandas_join_equivalence(db)
     assert ok
     assert set(QUERIES) == {"q1_where","q2_order_limit","q3_distinct","q4_between","q5_join"}
+
+
+def test_scraper_pagination_logic(monkeypatch):
+    from data_pipeline.src import scraper
+
+    def page(category: str, title: str, next_href: str | None = None) -> str:
+        next_html = f'<ul class="pager"><li class="next"><a href="{next_href}">next</a></li></ul>' if next_href else ''
+        return f"""<html><div class="page-header"><h1>{category}</h1></div>
+        <article class="product_pod"><h3><a title="{title}">{title}</a></h3><p class="price_color">£10.00</p><p class="star-rating Three"></p><p class="instock availability">In stock</p></article>
+        {next_html}</html>"""
+
+    pages = {
+        "https://example.com/travel/index.html": page("Travel", "X", "page-2.html"),
+        "https://example.com/travel/page-2.html": page("Travel", "Y"),
+        "https://example.com/mystery/index.html": page("Mystery", "Z"),
+        "https://example.com/history/index.html": page("History", "W"),
+    }
+    monkeypatch.setattr(scraper, "_fetch", lambda url: pages[url])
+    urls = [
+        "https://example.com/travel/index.html",
+        "https://example.com/mystery/index.html",
+        "https://example.com/history/index.html",
+    ]
+    out = scraper.scrape_categories(urls, min_rows=4)
+    assert [book.title for book in out] == ["X", "Y", "Z", "W"]

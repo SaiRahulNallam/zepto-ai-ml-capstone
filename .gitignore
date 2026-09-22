@@ -10,3 +10,4 @@ venv/
 *.log
 support_assistant/chroma_db/*
 !support_assistant/chroma_db/.gitkeep
+.venv-support/

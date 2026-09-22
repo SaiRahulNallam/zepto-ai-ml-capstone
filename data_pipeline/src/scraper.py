@@ -10,10 +10,12 @@ from bs4 import BeautifulSoup
 
 LOGGER = logging.getLogger(__name__)
 BASE_URL = "https://books.toscrape.com/"
+# These are the current category paths published by books.toscrape.com.
+# Historical Fiction uses *_4* (not *_20*) on the live site.
 CATEGORY_URLS = [
     urljoin(BASE_URL, "catalogue/category/books/travel_2/index.html"),
     urljoin(BASE_URL, "catalogue/category/books/mystery_3/index.html"),
-    urljoin(BASE_URL, "catalogue/category/books/historical-fiction_20/index.html"),
+    urljoin(BASE_URL, "catalogue/category/books/historical-fiction_4/index.html"),
 ]
 
 @dataclass(frozen=True)
@@ -58,13 +60,28 @@ def _parse_listing(html: str, category: str) -> list[RawBook]:
 
 
 def scrape_categories(category_urls: Iterable[str] = CATEGORY_URLS, min_rows: int = 60) -> list[RawBook]:
+    """Scrape all listing pages for the selected categories.
+
+    The site can have fewer than 20 books in a category, while other categories
+    span multiple pages. Following each category's ``next`` link ensures the
+    assignment minimum of 60 books is met without hard-coding page counts.
+    """
     results: list[RawBook] = []
-    for url in category_urls:
-        html = _fetch(url)
-        soup = BeautifulSoup(html, "html.parser")
-        category_tag = soup.select_one(".page-header h1")
-        category = category_tag.get_text(" ", strip=True) if category_tag else url.rsplit('/', 2)[-2]
-        results.extend(_parse_listing(html, category))
+    visited: set[str] = set()
+
+    for start_url in category_urls:
+        url = start_url
+        while url and url not in visited:
+            visited.add(url)
+            html = _fetch(url)
+            soup = BeautifulSoup(html, "html.parser")
+            category_tag = soup.select_one(".page-header h1")
+            category = category_tag.get_text(" ", strip=True) if category_tag else start_url.rsplit('/', 2)[-2]
+            results.extend(_parse_listing(html, category))
+
+            next_link = soup.select_one("li.next a")
+            url = urljoin(url, next_link.get("href")) if next_link and next_link.get("href") else ""
+
     if len(results) < min_rows:
         raise RuntimeError(f"Scrape returned {len(results)} books; minimum is {min_rows}.")
     if len({b.category for b in results}) < 3:

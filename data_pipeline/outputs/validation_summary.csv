@@ -1,0 +1,2 @@
+rows,categories,gbp_to_inr,join_equivalent,query_rows
+69,3,105.5,True,"{'q1_where': 27, 'q2_order_limit': 10, 'q3_distinct': 3, 'q4_between': 33, 'q5_join': 30}"
