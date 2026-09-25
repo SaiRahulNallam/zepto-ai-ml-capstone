@@ -21,6 +21,7 @@ Python 3.11; requests; BeautifulSoup; pandas; SQLite; seaborn/matplotlib; scikit
 
 ## Setup
 
+Python 3.11 is the tested project environment. The Support Assistant was validated using Python 3.11.9.
 A single root `requirements.txt` is used for all three modules.
 
 ```bash
