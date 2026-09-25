@@ -20,3 +20,17 @@ The live scrape requires network access. The implementation fails loudly if the 
 - `categories(category_id)` is the parent table and `books(category_id)` is the foreign key.
 - Query outputs are written to `sql/query_outputs.md` after execution.
 - `pd.read_sql_query` is used for SQL read-back; `pd.merge` independently reproduces the join.
+
+## Results
+
+The validated pipeline produced:
+
+- 69 books
+- 3 categories
+- GBP to INR conversion: 105.50
+- SQL/pandas join equivalence: True
+- Q1 WHERE query rows: 27
+- Q2 ORDER/LIMIT query rows: 10
+- Q3 DISTINCT query rows: 3
+- Q4 BETWEEN query rows: 33
+- Q5 JOIN query rows: 30
