@@ -12,7 +12,7 @@ SELECT title, price_gbp FROM books WHERE rating >= 4 ORDER BY price_gbp DESC;
 | A Flight of Arrows (The Pathfinders #2)                                  |       55.53 |
 | Murder at the 42nd Street Library (Raymond Ambler #1)                    |       54.36 |
 | The Bachelor Girl's Guide to Murder (Herringford and Watts Mysteries #1) |       52.3  |
-| Full Moon over Noahâs Ark: An Odyssey to Mount Ararat and Beyond       |       49.43 |
+| Full Moon over Noahâs Ark: An Odyssey to Mount Ararat and Beyond                                                                          |       49.43 |
 | A Time of Torment (Charlie Parker #14)                                   |       48.35 |
 | Sharp Objects                                                            |       47.82 |
 | The Murder of Roger Ackroyd (Hercule Poirot #4)                          |       44.1  |
