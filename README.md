@@ -42,7 +42,7 @@ Run:
 
 ```bash
 python -m data_pipeline.src.pipeline
-pytest -q data_pipeline/tests
+python -m pytest -q data_pipeline/tests
 ```
 
 The scraper uses three categories, requires at least 60 books, and captures title, price, star rating, availability, and category. The project-defined rate is exactly `1 GBP = 105.50 INR`; it is not a live exchange rate.
@@ -55,7 +55,7 @@ Run:
 
 ```bash
 python -m analytics.src.pipeline
-pytest -q analytics/tests
+python -m pytest -q analytics/tests
 ```
 
 Artifacts are written to `analytics/outputs/` and the complete fitted preprocessing + estimator is saved as `analytics/models/best_pipeline.joblib`. The model pipeline is raw-input compatible after reload.
