@@ -72,7 +72,7 @@ python -m support_assistant.build_index
 Run API:
 
 ```bash
-MOCK_LLM=1 uvicorn support_assistant.main:app --host 0.0.0.0 --port 7860
+uvicorn support_assistant.main:app --host 0.0.0.0 --port 7860
 ```
 
 Example calls:
@@ -87,8 +87,7 @@ The eight supplied policy documents are stored verbatim in `support_assistant/do
 ### Docker
 
 ```bash
-cd support_assistant
-docker build -t zepto-support-assistant .
+docker build -t zepto-support-assistant -f support_assistant/Dockerfile .
 docker run --rm -p 7860:7860 zepto-support-assistant
 ```
 
@@ -135,9 +134,13 @@ git log --graph --oneline --all
 
 Do not manufacture timestamps or deceptive history; the final history should show genuine branch/commit/merge activity.
 
-## Important execution note for this build environment
+## Execution Note
 
-This repository was generated in an environment without outbound DNS/network access, without Docker, and without the optional Support Assistant packages preinstalled. I therefore did **not** fabricate the scraper outputs, ChromaDB vectors, API JSON transcripts, or Docker build evidence. The code and tests are present, and the commands that require those unavailable capabilities are documented as local execution steps. The same principle is applied to analytics: where `sns.load_dataset('titanic')` cannot reach the network/cache in this environment, the committed `analytics/titanic.csv` is used solely as the offline fallback required by the capstone.
+Some components of the project were developed in environments with limited network or package availability. Where external dependencies were unavailable during development, no execution results were fabricated.
+
+The Support Assistant was subsequently validated locally with its required dependencies, including index building, FastAPI `/ask` requests, and Docker build/run. Actual API response evidence is recorded in `support_assistant/examples/responses.md`.
+
+For Analytics, the committed `analytics/titanic.csv` supports the required offline fallback when `sns.load_dataset('titanic')` is unavailable.
 
 ## Local Docker Validation
 
@@ -148,4 +151,4 @@ The Support Assistant was validated locally with Docker on September 22, 2026.
 - `GET /health`: returned `status: ok`
 - `POST /ask` policy question: returned `answer`, 3 retrieved sources, and `confidence: 1.0`
 - `POST /ask` general question: returned the policy-focused response, `sources: []`, and `confidence: 1.0`
-- Raw API responses are recorded in `support_assistant/api_examples_raw.json`
+- Raw API responses are recorded in `support_assistant/examples/responses.md`

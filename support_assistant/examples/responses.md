@@ -1,3 +1,33 @@
 # API Response Evidence
 
-The raw API transcripts are intentionally not fabricated in this build environment because `sentence-transformers`, ChromaDB, and LangGraph were not installed and the environment had no network access for dependency installation. After installing `requirements.txt`, run `python -m support_assistant.build_index`, start FastAPI, and use the two JSON example files to record the actual responses here.
+## Example 1 — Policy Question
+
+### Request
+
+```json
+{
+  "query": "What are the customer support hours?"
+}
+```
+
+### Actual Response
+
+```json
+{"answer":"Based on the retrieved context: Zepto customer support is available via in-app chat 24 hours a day, 7 days a week, given the time-sensitive nature of quick commerce deliveries. Average in-app chat response time is under 2 minutes. E","sources":["doc_08_chunk_0","doc_06_chunk_0","doc_02_chunk_0"],"confidence":1.0}
+```
+
+## Example 2 — General Question
+
+### Request
+
+```json
+{
+  "query": "Who is the CEO of Zepto?"
+}
+```
+
+### Actual Response
+
+```json
+{"answer":"I can only answer questions about Zepto policies right now.","sources":[],"confidence":1.0}
+```
