@@ -94,6 +94,29 @@ docker run --rm -p 7860:7860 zepto-support-assistant
 
 The Dockerfile is the required local container baseline; cloud deployment is optional.
 
+## Design Decisions
+
+### Module 1 — Data Pipeline
+
+- Used three book categories and a minimum 60-row scraping scope.
+- Used the required fixed conversion rate of 1 GBP = 105.50 INR.
+- Used normalized SQLite tables with a primary-key/foreign-key relationship.
+- Used both SQL queries and pandas to validate the join result.
+
+### Module 2 — Analytics
+
+- Loaded the Titanic dataset once and committed `analytics/titanic.csv` as the offline fallback.
+- Used a stratified train/test split before train-only preprocessing.
+- Used a scikit-learn `ColumnTransformer` and `Pipeline` to keep preprocessing inside the training workflow.
+- Compared three classifiers, imbalance strategies, Random Forest tuning, and the regression side-task.
+
+### Module 3 — Support Assistant
+
+- Used local `all-MiniLM-L6-v2` embeddings and ChromaDB for offline retrieval.
+- Used LangGraph conditional routing between policy retrieval and direct-answer paths.
+- Used `MOCK_LLM=1` as the deterministic graded baseline.
+- Used Pydantic validation and FastAPI for the final structured API response.
+
 ## Validation / Acceptance Coverage
 
 | Requirement | Implementation | Evidence |
